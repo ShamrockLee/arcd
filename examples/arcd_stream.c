@@ -42,16 +42,14 @@ int main(int argc, char *argv[])
 		usage(stderr);
 		return 0;
 	}
-	FILE *const in = fdopen(dup(fileno(stdin)), "rb");
-	FILE *const out = fdopen(dup(fileno(stdout)), "wb");
 	adaptive_model model;
 	adaptive_model_create(&model, EOS + 1);
 	if (0 == strcmp("-e", argv[1]))
 	{
 		arcd_enc enc;
-		arcd_enc_init(&enc, adaptive_model_getprob, &model, output, out);
+		arcd_enc_init(&enc, adaptive_model_getprob, &model, output, stdout);
 		symbol_t sym;
-		while (0 < fread(&sym, sizeof(sym), 1, in))
+		while (0 < fread(&sym, sizeof(sym), 1, stdin))
 		{
 			arcd_enc_put(&enc, sym);
 		}
@@ -61,16 +59,14 @@ int main(int argc, char *argv[])
 	else if (0 == strcmp("-d", argv[1]))
 	{
 		arcd_dec dec;
-		arcd_dec_init(&dec, adaptive_model_getch, &model, input, in);
+		arcd_dec_init(&dec, adaptive_model_getch, &model, input, stdin);
 		arcd_char_t ch;
 		while (EOS != (ch = arcd_dec_get(&dec)))
 		{
 			const symbol_t sym = (unsigned char)ch;
-			fwrite(&sym, sizeof(sym), 1, out);
+			fwrite(&sym, sizeof(sym), 1, stdout);
 		}
 	}
 	adaptive_model_free(&model);
-	fclose(in);
-	fclose(out);
 	return 0;
 }
