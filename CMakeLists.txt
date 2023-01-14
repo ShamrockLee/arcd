@@ -16,7 +16,9 @@ endif()
 
 option(ARCD_CONFIGURE_INSTALL "Generate install target" ON)
 option(ARCD_EXAMPLES "Build examples" OFF)
+option(ARCD_EXAMPLES_INSTALL "Install example executables and libraries when enabling ARCD_EXAMPLES" OFF)
 option(ARCD_TESTS "Build tests" OFF)
+option(ARCD_TESTS_INSTALL "Install test executables when enabling ARCD_TESTS" OFF)
 
 add_subdirectory(arcd)
 

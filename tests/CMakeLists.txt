@@ -8,3 +8,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -Werror -pedant
 add_executable(codec_tests codec_tests.cpp)
 target_link_libraries(codec_tests arcd)
 add_test(NAME codec_tests COMMAND codec_tests)
+
+if (ARCD_TESTS_INSTALL)
+	install(TARGETS codec_tests EXPORT arcd_codec_test
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
