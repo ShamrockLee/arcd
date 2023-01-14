@@ -7,12 +7,13 @@ endif()
 
 project(arcd)
 
-set(INSTALL_INCLUDE_DIR include CACHE PATH
-	"Installation directory for header files")
-set(INSTALL_LIB_DIR lib CACHE PATH
-	"Installation directory for libraries")
-set(INSTALL_CMAKE_DIR lib/cmake/arcd CACHE PATH
-	"Installation directory for CMake files")
+include(GNUInstallDirs)
+
+if(NOT DEFINED INSTALL_CMAKE_DIR)
+	set(INSTALL_CMAKE_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/arcd CACHE PATH
+		"Installation directory for CMake files")
+endif()
+
 option(ARCD_CONFIGURE_INSTALL "Generate install target" ON)
 option(ARCD_EXAMPLES "Build examples" OFF)
 option(ARCD_TESTS "Build tests" OFF)
