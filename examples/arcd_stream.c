@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	}
 	if (0 == strcmp("-h", argv[1]))
 	{
-		usage(stdout);
+		usage(stderr);
 		return 0;
 	}
 	FILE *const in = fdopen(dup(fileno(stdin)), "rb");
